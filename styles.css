@@ -1,0 +1,197 @@
+*{
+    margin:0;
+    padding: 0;
+}
+
+html {
+    font-size: 100%; /* Это эквивалентно 16px */
+}
+
+@font-face {
+    font-family: 'yandex';
+    src: url("fonts/yandex-sans-text-regular.ttf");
+}
+
+.wrapper {
+    background-color: #edf6ff;
+    height: 100vh;
+}
+
+.banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+.wine {
+    width: 37px;
+    height: 124px;
+}
+
+.milk {
+    width: 37px;
+    height: 90px;
+}
+
+.jam {
+    width: 46px;
+    height: 41px;
+}
+
+.cheese {
+    width: 36px;
+    height: 34px;
+}
+
+.meat {
+    width: 49px;
+    height: 48px;
+}
+
+.leg {
+    width: 54px;
+    height: 49px;
+}
+
+.chips {
+    width: 76px;
+    height: 46px;
+}
+
+.pineapple {
+    width: 35px;
+    height: 74px;
+}
+
+.banana {
+    width: 47px;
+    height: 47px;
+}
+
+.apple {
+    width: 31px;
+    height: 36px;
+
+}
+
+.salat {
+    width: 61px;
+    height: 51px;
+
+}
+
+.shelf-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 211px;
+    height: 432px;
+    background-image: url("image/shelf.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 10;
+}
+
+.shelf {
+    display: flex;
+    align-items: end;
+    width: 110%;
+}
+
+.shelf-3 {
+    justify-content: space-between;
+}
+
+.product {
+    margin: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: move;
+    transition: all 0.2s ease;
+}
+
+.basket-container {
+    margin-top: 90px;
+    width: 170px;
+    display: flex;
+    z-index: 100;
+    align-items: end;
+    padding-left: 70px;
+    height: 115px;
+}
+
+
+.basket_img {
+    position: absolute;
+   z-index: 100000;
+    top:340px;
+    left:-33px;
+    width: 276px;
+}
+
+.product.dragging {
+    opacity: 0.9;
+    margin-top: unset;
+    margin-bottom: unset;
+    margin-right: unset;
+    margin-left: -20px;
+}
+
+.dragging:nth-child(even) {
+    margin-left: -40px;
+}
+
+.shelf-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.shelf-2 {
+    margin-top: 42px;
+}
+
+.shelf-3 {
+    margin-top: 10px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.btn_basket {
+    position: fixed;
+    top:520px;
+    z-index: 10000;
+    height: 56px;
+    background-color: #fce000;
+    border: none;
+    border-radius: 13px;
+    padding:12px 18px;
+    font-family: yandex, sans-serif;
+    font-size: 1rem;
+
+}
+.btn_basket:hover{
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgb(128, 218, 239);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
