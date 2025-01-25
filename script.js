@@ -1,21 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
     const products = document.querySelectorAll('.product');
     const basket = document.querySelector('.basket-container');
-    const banner=document.querySelector('.banner')
+    const banner = document.querySelector('.banner');
     const button = document.createElement('button');
 
     button.textContent = 'Оплатить корзину';
     button.style.display = 'none';
-    button.type='submit';
+    button.type = 'submit';
     banner.appendChild(button);
 
-    button.addEventListener('click', ()=>{
-        window.location.href= 'https://lavka.yandex.ru';
-    })
+    button.addEventListener('click', () => {
+        window.location.href = 'https://lavka.yandex.ru';
+    });
+
     let draggedItem = null;
+    let draggedClone = null;
+    let touchStartX = 0;
+    let touchStartY = 0;
 
     products.forEach(function(product) {
-        product.addEventListener('dragstart', function (e) {
+        product.addEventListener('dragstart', function(e) {
             draggedItem = this;
             this.classList.add('dragging');
             e.dataTransfer.setData('text', '');
@@ -27,6 +31,63 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.remove('hidden');
             }
             draggedItem = null;
+        });
+
+        product.addEventListener('touchstart', function(e) {
+            if(draggedItem === null){
+                draggedItem = this;
+                this.classList.add('dragging');
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }
+        });
+        product.addEventListener('touchmove', function(e) {
+            if (draggedItem) {
+                if (!draggedClone) {
+                    draggedClone = draggedItem.cloneNode(true);
+                    draggedClone.style.position = 'absolute';
+                    draggedClone.style.zIndex = '1000';
+                    draggedClone.style.pointerEvents = 'none';
+                    document.body.appendChild(draggedClone);
+                }
+
+                draggedClone.style.left = e.touches[0].clientX - this.offsetWidth / 2 + 'px';
+                draggedClone.style.top = e.touches[0].clientY - this.offsetHeight / 2 + 'px';
+
+                e.preventDefault();
+            }
+        });
+
+        product.addEventListener('touchend', function(e) {
+            if (draggedItem) {
+                if(draggedClone){
+                    document.body.removeChild(draggedClone);
+                    draggedClone = null;
+                }
+
+                const touchEndX = e.changedTouches[0].clientX;
+                const touchEndY = e.changedTouches[0].clientY;
+                const scaleX = window.innerWidth / document.documentElement.clientWidth;
+                const scaleY = window.innerHeight / document.documentElement.clientHeight;
+                const basketRect = basket.getBoundingClientRect();
+                const basketLeft = basketRect.left + window.scrollX;
+                const basketTop = basketRect.top + window.scrollY;
+                const basketRight = basketLeft + basketRect.width;
+                const basketBottom = basketTop + basketRect.height;
+
+                if (touchEndX  >= (basketLeft - 50) * scaleX &&
+                    touchEndX  <= (basketRight + 50)* scaleX &&
+                    touchEndY >= (basketTop - 50) * scaleY &&
+                    touchEndY <= (basketBottom + 50) * scaleY) {
+                    basket.dispatchEvent(new Event('drop'));
+                } else {
+                    this.classList.remove('dragging');
+                    if (draggedItem && !basket.contains(draggedItem)){
+                        this.classList.remove('hidden');
+                    }
+                }
+                draggedItem = null;
+            }
         });
     });
 
@@ -40,59 +101,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const clonedItem = draggedItem.cloneNode(true);
             clonedItem.removeAttribute('id');
             clonedItem.setAttribute('draggable', false);
-
-            const position = parseInt(draggedItem.getAttribute('data-position'), 10);
-            clonedItem.style.position = 'absolute';
-
-            if (position < 1 ) {
-                clonedItem.style.top = '400px';
-                clonedItem.style.left='80px'
-            }
-            if(position >=1){
-                clonedItem.style.top='430px'
-            }
-            if(position >= 2 ){
-                clonedItem.style.top='480px';
-                clonedItem.style.left='130px'
-            }
-            if(position >=3){
-                clonedItem.style.top='490px'
-                clonedItem.style.left='140px'
-            }
-            if(position >=4){
-                clonedItem.style.top='480px'
-                clonedItem.style.left='120px'
-                clonedItem.style.zIndex='-4'
-            }
-            if(position >=5){
-                clonedItem.style.top='480px'
-                clonedItem.style.left='150px'
-
-            }
-            if(position >=6){
-                clonedItem.style.top='480px'
-                clonedItem.style.left='155px'
-                clonedItem.style.zIndex='-4'
-            }
-            if(position >=7){
-                clonedItem.style.top='440px'
-                clonedItem.style.left='185px'
-                clonedItem.style.zIndex='-3'
-            }
-            if(position >=8){
-                clonedItem.style.top='470px'
-                clonedItem.style.left='185px'
-            }
             this.appendChild(clonedItem);
             draggedItem.classList.add('hidden');
             draggedItem = null;
-
-            const itemInBasket= this.querySelectorAll('.product').length;
-            if(itemInBasket >= 3){
-                button.style.display='block';
-                button.classList.add('btn_basket')
+            const itemInBasket = this.querySelectorAll('.product').length;
+            if (itemInBasket >= 3) {
+                button.style.display = 'block';
+                button.classList.add('btn_basket');
             } else {
-                button.style.display='none';
+                button.style.display = 'none';
             }
         }
     });

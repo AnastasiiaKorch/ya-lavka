@@ -4,7 +4,7 @@
 }
 
 html {
-    font-size: 100%; /* Это эквивалентно 16px */
+    font-size: 100%;
 }
 
 @font-face {
@@ -13,6 +13,7 @@ html {
 }
 
 .wrapper {
+    padding-top:1.25rem;
     background-color: #edf6ff;
     height: 100vh;
 }
@@ -22,7 +23,7 @@ html {
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    padding: 20px;
+    padding: 1.25rem;
     position: relative;
 }
 
@@ -106,7 +107,7 @@ html {
 }
 
 .product {
-    margin: 3px;
+    margin: 0.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,19 +116,19 @@ html {
 }
 
 .basket-container {
-    margin-top: 90px;
+    margin-top: 5.6rem;
     width: 170px;
     display: flex;
     z-index: 100;
     align-items: end;
-    padding-left: 70px;
+    padding-left: 4.4rem;
     height: 115px;
 }
 
 
 .basket_img {
     position: absolute;
-   z-index: 100000;
+    z-index: 100000;
     top:340px;
     left:-33px;
     width: 276px;
@@ -142,7 +143,7 @@ html {
 }
 
 .dragging:nth-child(even) {
-    margin-left: -40px;
+    margin-left: -2.5rem;
 }
 
 .shelf-container {
@@ -151,11 +152,11 @@ html {
 }
 
 .shelf-2 {
-    margin-top: 42px;
+    margin-top: 2.6rem;
 }
 
 .shelf-3 {
-    margin-top: 10px;
+    margin-top: 1.6rem;
 }
 
 .hidden {
@@ -170,10 +171,10 @@ html {
     background-color: #fce000;
     border: none;
     border-radius: 13px;
-    padding:12px 18px;
+    padding: 0.75rem 1.125rem;
     font-family: yandex, sans-serif;
     font-size: 1rem;
-
+    color: black;
 }
 .btn_basket:hover{
     animation: pulse 1.5s infinite;
@@ -194,4 +195,72 @@ html {
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
     }
+}
+.basket-container [data-product-id='wine']{
+    position: absolute;
+    top:395px;
+    z-index: 9;
+    left: 70px;
+}
+
+.basket-container [data-product-id='milk']{
+    position: absolute;
+    top:430px;
+    z-index: 10;
+    width: 50px;
+}
+
+.basket-container [data-product-id='salat']{
+    position:absolute;
+    top:470px;
+    left: 180px;
+}
+
+.basket-container [data-product-id='jam']{
+    position:absolute;
+    top:470px;
+    left: 180px;
+}
+.basket-container [data-product-id='cheese']{
+    position:absolute;
+    top:470px;
+    left: 160px;
+}
+
+.basket-container [data-product-id='chips']{
+    position:absolute;
+    top:470px;
+    left: 160px;
+}
+
+.basket-container [data-product-id='leg']{
+    position:absolute;
+    top:470px;
+    left: 140px;
+}
+
+.basket-container [data-product-id='meat']{
+    position:absolute;
+    top:470px;
+    left: 110px;
+}
+
+.basket-container [data-product-id='banana']{
+    position:absolute;
+    top:460px;
+    left: 130px;
+}
+
+.basket-container [data-product-id='pineapple']{
+    position:absolute;
+    top:440px;
+    left: 160px;
+    z-index: 8;
+}
+
+.basket-container [data-product-id='apple']{
+    position:absolute;
+    top:480px;
+    left: 160px;
+    z-index: 7;
 }
